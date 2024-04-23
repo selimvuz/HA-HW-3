@@ -29,11 +29,18 @@ eval_dataset = Dataset.from_pandas(eval_data)
 
 # Eğitim ve değerlendirme sırasında verileri de GPU'ya taşı
 def tokenize_function(examples):
-    encoded = tokenizer(examples['question'] + tokenizer.eos_token, examples['çıktı'], 
-                        truncation=True, max_length=512, padding="max_length")
-    # Modelin tahmin etmesi gereken kısmı belirt
-    encoded['labels'] = encoded['input_ids'][1:] + [tokenizer.eos_token_id]  # EOS token ile bitir
-    return encoded
+    combined_text = [(q + " " + g + tokenizer.eos_token + c) for q, g, c in zip(examples['talimat'], examples['giriş'], examples['çıktı'])]
+    inputs = tokenizer(combined_text, truncation=True, max_length=512, padding="max_length", return_tensors="pt")
+    inputs['labels'] = inputs.input_ids.detach().clone()
+    eos_mask = inputs.input_ids == tokenizer.eos_token_id
+    for i in range(inputs.input_ids.shape[0]):
+        eos_indices = (eos_mask[i] == True).nonzero(as_tuple=True)[0]
+        if len(eos_indices) > 0:
+            first_eos_idx = eos_indices[0]
+            inputs['labels'][i][:first_eos_idx+1] = -100
+        else:
+            inputs['labels'][i][:] = -100 
+    return inputs
 
 
 tokenized_train_datasets = train_dataset.map(tokenize_function, batched=True)
