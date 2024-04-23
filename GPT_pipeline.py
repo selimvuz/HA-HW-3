@@ -11,6 +11,6 @@ pipe = pipeline('text-generation', model=model, tokenizer=tokenizer)
 
 # Bir soru sor
 question = "Nasılsın?"
-answer = pipe(question)
+answer = pipe(question, max_length=50, num_return_sequences=1)
 
 print(answer)

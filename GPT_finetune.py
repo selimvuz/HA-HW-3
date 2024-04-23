@@ -29,13 +29,11 @@ eval_dataset = Dataset.from_pandas(eval_data)
 
 # Eğitim ve değerlendirme sırasında verileri de GPU'ya taşı
 def tokenize_function(examples):
-    # Prepare the inputs and labels
-    inputs = tokenizer(
-        examples['question'], truncation=True, max_length=512, padding="max_length")
-    inputs = {k: torch.tensor(v).to(device)
-              for k, v in inputs.items()}  # GPU'ya taşı
-    inputs['labels'] = inputs['input_ids'].detach().clone()
-    return inputs
+    encoded = tokenizer(examples['question'] + tokenizer.eos_token, examples['çıktı'], 
+                        truncation=True, max_length=512, padding="max_length")
+    # Modelin tahmin etmesi gereken kısmı belirt
+    encoded['labels'] = encoded['input_ids'][1:] + [tokenizer.eos_token_id]  # EOS token ile bitir
+    return encoded
 
 
 tokenized_train_datasets = train_dataset.map(tokenize_function, batched=True)
@@ -47,11 +45,11 @@ training_args = TrainingArguments(
     gradient_accumulation_steps=2,  # ?
     per_device_train_batch_size=2,
     per_device_eval_batch_size=2,
-    fp16=True,  # Enable mixed precision ?
+    fp16=True,
     warmup_steps=250,
     weight_decay=0.01,
     logging_dir='./logs',
-    logging_steps=50,
+    logging_steps=100,
     do_train=True,
     do_eval=True,
     evaluation_strategy="steps",
