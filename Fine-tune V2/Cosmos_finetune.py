@@ -15,7 +15,7 @@ device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 model.to(device)
 
 # CSV dosyasını yükle ve sütunları birleştir
-data = pd.read_csv("instructions.csv")
+data = pd.read_csv("../datasets/instructions.csv")
 data['question'] = data['talimat'] + " " + \
     data['giriş'] + tokenizer.eos_token + data['çıktı']
 data = data.dropna(subset=['question', 'çıktı'])  # Eksik değerleri temizle
