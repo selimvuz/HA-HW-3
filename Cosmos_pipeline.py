@@ -1,8 +1,8 @@
 from transformers import AutoTokenizer, AutoModelForCausalLM, pipeline
 
 # Modeli yükle
-model = AutoModelForCausalLM.from_pretrained("./finetuned_gpt_large_v2")
-tokenizer = AutoTokenizer.from_pretrained("./finetuned_gpt_large_v2")
+model = AutoModelForCausalLM.from_pretrained("./finetuned_gpt_large_v3")
+tokenizer = AutoTokenizer.from_pretrained("./finetuned_gpt_large_v3")
 
 if tokenizer.pad_token is None:
     tokenizer.pad_token = tokenizer.eos_token
@@ -18,5 +18,5 @@ def get_model_response(instruction):
 
 
 model_response = get_model_response(
-    "Para mutluluk getirir mi?")
+    "Aşılar zorunlu olmalı mı?")
 print(model_response)

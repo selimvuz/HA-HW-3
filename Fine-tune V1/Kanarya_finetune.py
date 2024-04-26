@@ -80,5 +80,5 @@ trainer = Trainer(
 trainer.train()
 
 # Modeli kaydet
-model.save_pretrained("./finetuned_kanarya")
-tokenizer.save_pretrained("./finetuned_kanarya")
+model.save_pretrained("./finetuned_kanarya_v1")
+tokenizer.save_pretrained("./finetuned_kanarya_v1")
