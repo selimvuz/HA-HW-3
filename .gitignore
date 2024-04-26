@@ -1,4 +1,4 @@
 /logs
 /results
-/finetuned_gpt
-/finetuned_gpt_large
+/finetuned_kanarya*
+/finetuned_gpt_large*

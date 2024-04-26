@@ -1,8 +1,8 @@
 from transformers import AutoTokenizer, AutoModelForCausalLM, pipeline
 
 # Modeli yükle
-model = AutoModelForCausalLM.from_pretrained("./finetuned_kanarya")
-tokenizer = AutoTokenizer.from_pretrained("./finetuned_kanarya")
+model = AutoModelForCausalLM.from_pretrained("./finetuned_kanarya_v2")
+tokenizer = AutoTokenizer.from_pretrained("./finetuned_kanarya_v2")
 
 if tokenizer.pad_token is None:
     tokenizer.pad_token = tokenizer.eos_token
@@ -17,5 +17,5 @@ def get_model_response(instruction):
     return generated_response[len(instruction_prompt):]
 
 model_response = get_model_response(
-    "Yapay sinir ağlarının geleneksel hesaplama yöntemlerine göre avantajları nelerdir?")
+    "Para mutluluk getirir mi?")
 print(model_response)
