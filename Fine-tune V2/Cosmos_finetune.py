@@ -77,5 +77,5 @@ trainer = Trainer(
 
 trainer.train()
 
-model.save_pretrained("./finetuned_gpt_large")
-tokenizer.save_pretrained("./finetuned_gpt_large")
+model.save_pretrained("./finetuned_gpt_large_v2")
+tokenizer.save_pretrained("./finetuned_gpt_large_v2")

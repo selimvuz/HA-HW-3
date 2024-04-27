@@ -54,7 +54,7 @@ training_args = TrainingArguments(
     gradient_accumulation_steps=2,
     per_device_train_batch_size=2,
     per_device_eval_batch_size=2,
-    fp16=True,
+    fp16=False,
     warmup_steps=250,
     weight_decay=0.01,
     logging_dir='./logs',
@@ -77,5 +77,5 @@ trainer = Trainer(
 
 trainer.train()
 
-model.save_pretrained("./finetuned_kanarya")
-tokenizer.save_pretrained("./finetuned_kanarya")
+model.save_pretrained("./finetuned_kanarya_v2")
+tokenizer.save_pretrained("./finetuned_kanarya_v2")
