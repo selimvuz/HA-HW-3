@@ -16,7 +16,6 @@ def get_model_response(instruction):
     generated_response = result[0]['generated_text']
     return generated_response[len(instruction_prompt):]
 
-
 model_response = get_model_response(
-    "Aşılar zorunlu olmalı mı?")
+    "Bu sunum ne zaman bitecek?")
 print(model_response)

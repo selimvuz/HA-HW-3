@@ -1,8 +1,8 @@
 from transformers import AutoTokenizer, AutoModelForCausalLM, pipeline
 
 # Modeli yükle
-model = AutoModelForCausalLM.from_pretrained("./finetuned_kanarya_v3")
-tokenizer = AutoTokenizer.from_pretrained("./finetuned_kanarya_v3")
+model = AutoModelForCausalLM.from_pretrained("asafaya/kanarya-750m")
+tokenizer = AutoTokenizer.from_pretrained("asafaya/kanarya-750m")
 
 if tokenizer.pad_token is None:
     tokenizer.pad_token = tokenizer.eos_token
@@ -17,5 +17,5 @@ def get_model_response(instruction):
     return generated_response[len(instruction_prompt):]
 
 model_response = get_model_response(
-    "Bir kilo pamuk mu daha ağırdır yoksa bir kilo demir mi?")
+    "Bu sunum ne zaman bitecek?")
 print(model_response)
